@@ -1,0 +1,30 @@
+﻿# Make Kestrel use SSL connections
+
+
+## Make self signed SSL certificate
+1. Run powershell as administrator (Start --> Type in 'powershell' --> Right click and run as administrator)
+2. Run this command: ``` New-SelfSignedCertificate -certstorelocation cert:\localmachine\my -dnsname self-signed-cert ```
+3. Take a copy of the thumbprint
+4. Run ``` $pwd = ConvertTo-SecureString -String "SmartPassw0rd" -Force -AsPlainText ```
+5. Run ``` Export-PfxCertificate -cert cert:\localMachine\my\###THUMBRINT### -FilePath selfsignedcert.pfx -Password $pwd ```
+
+
+## Add https capabilities to Kestrel 
+* In project.json - add ``` "Microsoft.AspNetCore.Server.Kestrel.Https": "1.0.1" ```
+* In program.cs
+```
+            // Define ssl certificate
+            var certFile = Directory.GetCurrentDirectory() + "\\selfsignedcert.pfx";
+            var signingCertificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(certFile, "SmartPassw0rd");
+            
+			// Set Options, including certificate specifications.
+            var host = new WebHostBuilder()
+                .UseKestrel(options => {
+                    options.UseHttps(signingCertificate); }
+                    )
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .Build();
+```
+* Add enviroment variable to start kestrel serving https. Go to Project --> your solution properties --> Debug. Add the pair "ASPNETCORE_URLS": "https://localhost:5443/
