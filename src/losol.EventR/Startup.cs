@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using losol.EventR.Data;
 using losol.EventR.Models;
 using losol.EventR.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace losol.EventR
 {
@@ -46,6 +47,12 @@ namespace losol.EventR
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             services.AddMvc();
 
