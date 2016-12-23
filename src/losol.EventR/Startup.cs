@@ -51,9 +51,6 @@ namespace losol.EventR
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-
- 
-
             services.AddMvc();
 
             // Add application services.
