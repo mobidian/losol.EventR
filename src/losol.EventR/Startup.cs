@@ -61,9 +61,6 @@ namespace losol.EventR
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.Configure<EmailSenderOptions>(Configuration.GetSection("SendGrid"));
-            Console.WriteLine("************************************************");
-            Console.WriteLine(Configuration.GetSection("SendGrid").GetValue<String>("SendGridUser"));
-            Console.WriteLine("************************************************");
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
