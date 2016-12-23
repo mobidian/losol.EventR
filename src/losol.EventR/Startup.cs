@@ -28,7 +28,7 @@ namespace losol.EventR
             if (env.IsDevelopment())
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets("aspnet-losol.EventR-5557860b-4779-499c-9837-4ad7ea1a6522");
+                builder.AddUserSecrets("aspnet-losol.EventR-d18f74f1-43ff-46bf-b772-bf590ff69910");
             }
 
             builder.AddEnvironmentVariables();
@@ -52,10 +52,7 @@ namespace losol.EventR
                 .AddDefaultTokenProviders();
 
 
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new RequireHttpsAttribute());
-            });
+ 
 
             services.AddMvc();
 
@@ -63,7 +60,15 @@ namespace losol.EventR
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            services.Configure<EmailSenderOptions>(Configuration);
+            services.Configure<EmailSenderOptions>(Configuration.GetSection("SendGrid"));
+            Console.WriteLine("************************************************");
+            Console.WriteLine(Configuration.GetSection("SendGrid").GetValue<String>("SendGridUser"));
+            Console.WriteLine("************************************************");
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

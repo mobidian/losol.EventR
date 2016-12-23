@@ -11,7 +11,7 @@ public string SendGridKey { get; set; }
 In the package manager console
 ```  Install-Package SendGrid.NetCore -Pre ```
 
-Then
+Then add a command window in the project folder (under src folder)
 * dotnet user-secrets set SendGridUser LenoLos
 * dotnet user-secrets set SendGridKey 123asdf123
 
