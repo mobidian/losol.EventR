@@ -11,12 +11,21 @@ namespace losol.EventR
     {
         public static void Main(string[] args)
         {
+            // Define ssl certificate
+            var certFile = Directory.GetCurrentDirectory() + "\\selfsignedcert.pfx";
+            var signingCertificate = new System.Security.Cryptography.X509Certificates.X509Certificate2(certFile, "Th1sSh0uldBe1Secret");
+
             var host = new WebHostBuilder()
-                .UseKestrel()
+                .UseKestrel(options =>
+                {
+                    options.UseHttps(signingCertificate);
+                })
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("https://localhost:5443")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
+   
 
             host.Run();
         }
