@@ -271,10 +271,22 @@ namespace losol.EventR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            Console.WriteLine("*************** Forgot password");
+            _logger.LogInformation(1, "***** An user forget his password. *****");
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Email);
+                
+                if (user == null) 
+                {
+                    _logger.LogInformation(1, "***** But the user could not be found, sending link for register. *****");
+                    // Don't reveal that the user does not exist or is not confirmed
+                    var callbackUrl = Url.Action("Register", "Account");
+                    _logger.LogInformation(1, callbackUrl);
+                    await _emailSender.SendEmailAsync(model.Email, "You are welcome!",
+                   $"We have got an request for an forgotten password. However, no user with your email was found. <br>You are welcome to register a new user <a href='{callbackUrl}'>here</a>.");
+                return View("ForgotPasswordConfirmation");
+                }
+
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     Console.WriteLine("*************** user not found");

@@ -30,7 +30,7 @@ namespace losol.EventR.Services
             _message.To.Add(new MailboxAddress(email));
             _message.Subject = subject;
 
-            _message.Body = new TextPart("plain")
+            _message.Body = new TextPart("html")
             {
                 Text = message
             };
