@@ -274,29 +274,32 @@ namespace losol.EventR.Controllers
             _logger.LogInformation(1, "***** An user forget his password. *****");
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.Email);
-                
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                // No user with this email. Email a link to register. 
                 if (user == null) 
                 {
-                    _logger.LogInformation(1, "***** But the user could not be found, sending link for register. *****");
-                    // Don't reveal that the user does not exist or is not confirmed
-                    var callbackUrl = Url.Action("Register", "Account");
-                    _logger.LogInformation(1, callbackUrl);
-                    await _emailSender.SendEmailAsync(model.Email, "You are welcome!",
-                   $"We have got an request for an forgotten password. However, no user with your email was found. <br>You are welcome to register a new user <a href='{callbackUrl}'>here</a>.");
+                    _logger.LogInformation("***** But the user could not be found, sending link for register. *****");
+
+                    var registerUrl = Url.Action("Register", "Account");
+                    await _emailSender.SendEmailAsync(model.Email, "Forgotten password?",
+                   $"We have got an request for an forgotten password. However, no user with your email was found. <br>You are welcome to register a new user <a href='{registerUrl}'>here</a>.");
                 return View("ForgotPasswordConfirmation");
                 }
 
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                // Forgot password: but user has not confirmed his email. Send new confirmation email.
+                if ((await _userManager.IsEmailConfirmedAsync(user)) == false)
                 {
-                    Console.WriteLine("*************** user not found");
-                    // Don't reveal that the user does not exist or is not confirmed
+                    Console.WriteLine("***** But the problem is that the user has not confirmed his email. *****");
+                    
+                    var code2 = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl2 = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code2 }, protocol: HttpContext.Request.Scheme);
+                    await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
+                        $"To get a new password, you need to confirm account first. Please confirm your account by clicking this link: <a href='{callbackUrl2}'>link</a>. After that you have to request a new password. ");
                     return View("ForgotPasswordConfirmation");
                 }
-
-                Console.WriteLine("*************** Model valid");
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                // Send an email with this link
+                
+                // Otherwise just send an email with a reset password link. 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 await _emailSender.SendEmailAsync(model.Email, "Reset Password",

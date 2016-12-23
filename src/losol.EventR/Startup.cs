@@ -47,6 +47,9 @@ namespace losol.EventR
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>
                     {
                         config.SignIn.RequireConfirmedEmail = true;
+                        config.Password.RequireNonAlphanumeric = false;
+                        config.Password.RequiredLength = 6;
+                        config.Password.RequireDigit = true;
                     })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
