@@ -7,6 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2E35458F-199
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "losol.EventR", "src\losol.EventR\losol.EventR.csproj", "{431AC3BF-04AF-4D3D-8629-B7CACF343B96}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{54197961-2288-474C-8C58-A7EFC70A9CBB}"
+	ProjectSection(SolutionItems) = preProject
+		src\losol.EventR\Docs\ConfigureSendGridForEmail.md = src\losol.EventR\Docs\ConfigureSendGridForEmail.md
+		src\losol.EventR\Docs\Index.md = src\losol.EventR\Docs\Index.md
+		src\losol.EventR\Docs\KestrelWithHttps.md = src\losol.EventR\Docs\KestrelWithHttps.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
