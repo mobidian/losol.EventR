@@ -27,10 +27,10 @@ namespace losol.EventR.Services
 
             var _message = new MimeMessage();
             _message.From.Add(new MailboxAddress("losol.no", "ole@losol.no"));
-            _message.To.Add(new MailboxAddress(email);
+            _message.To.Add(new MailboxAddress(email));
             _message.Subject = subject;
 
-            _message.Body = new TextPart("plain")
+            _message.Body = new TextPart("html")
             {
                 Text = message
             };
