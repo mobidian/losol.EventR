@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using losol.EventR.Models;
 using losol.EventR.Models.AccountViewModels;
 using losol.EventR.Services;
@@ -22,16 +23,19 @@ namespace losol.EventR.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly string _externalCookieScheme;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
@@ -43,6 +47,9 @@ namespace losol.EventR.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
+            // Clear the existing external cookie to ensure a clean login process
+            HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -173,6 +180,7 @@ namespace losol.EventR.Controllers
                 return View(nameof(Login));
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
+
             if (info == null)
             {
                 return RedirectToAction(nameof(Login));
@@ -193,14 +201,28 @@ namespace losol.EventR.Controllers
             {
                 return View("Lockout");
             }
+            // Is there a user with this email? Well, log him in. 
+            var user = await _userManager.FindByEmailAsync(info.Principal.FindFirstValue(ClaimTypes.Email));
+            if ( user!= null)
+            {
+                ViewData["ReturnUrl"] = returnUrl;
+                ViewData["LoginProvider"] = info.LoginProvider;
+                await _signInManager.SignInAsync(user, false);
+                _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+                return RedirectToLocal(returnUrl);
+            }
             else
             {
-                // If the user does not have an account, then ask the user to create an account.
+                // If the user does not have an account, just make it!
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
-            }
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name);
+                return await ExternalLoginConfirmation(new ExternalLoginConfirmationViewModel { Email = email, FullName = name });
+               
+
+            // OLD CODE: return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+        }
         }
 
         //
@@ -214,11 +236,16 @@ namespace losol.EventR.Controllers
             {
                 // Get the information about the user from the external login provider
                 var info = await _signInManager.GetExternalLoginInfoAsync();
+
+                // No info?
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                user.EmailConfirmed = true; 
+                user.FullName = model.FullName;
+
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -234,7 +261,7 @@ namespace losol.EventR.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
-            return View(model);
+            return View("ExternalLoginConfirmation", model);
         }
 
         // GET: /Account/ConfirmEmail
