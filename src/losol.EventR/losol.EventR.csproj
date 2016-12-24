@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="MailKit" Version="1.10.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="1.1.0" />
     <PackageReference Include="Microsoft.NETCore.App" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.0" />
