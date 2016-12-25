@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using losol.EventR.Models;
 using losol.EventR.Models.AccountViewModels;
 using losol.EventR.Services;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace losol.EventR.Controllers
 {
@@ -19,6 +20,7 @@ namespace losol.EventR.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
@@ -27,6 +29,7 @@ namespace losol.EventR.Controllers
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
@@ -34,6 +37,7 @@ namespace losol.EventR.Controllers
             ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _emailSender = emailSender;

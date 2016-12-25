@@ -69,7 +69,7 @@ namespace losol.EventR
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -89,25 +89,31 @@ namespace losol.EventR
 
             app.UseIdentity();
 
+
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-            app.UseFacebookAuthentication(new FacebookOptions()
+            if (!string.IsNullOrWhiteSpace(Configuration["Authentication:Facebook:AppId"]) && !string.IsNullOrWhiteSpace(Configuration["Authentication:Facebook:AppSecret"]))
             {
-                AppId = Configuration["Authentication:Facebook:AppId"],
-                AppSecret = Configuration["Authentication:Facebook:AppSecret"],
-                Scope = { "email" },
-                Fields = { "email" },
-                SaveTokens = true,
-                UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email",
-                AutomaticAuthenticate = true
-           
+                app.UseFacebookAuthentication(new FacebookOptions()
+                {
+                    AppId = Configuration["Authentication:Facebook:AppId"],
+                    AppSecret = Configuration["Authentication:Facebook:AppSecret"],
+                    Scope = { "email" },
+                    Fields = { "email" },
+                    SaveTokens = true,
+                    UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email",
+                    AutomaticAuthenticate = true
 
-            });
-            app.UseGoogleAuthentication(new GoogleOptions()
+
+                });
+            }
+            if (!string.IsNullOrWhiteSpace(Configuration["Authentication:Google:ClientId"]) && !string.IsNullOrWhiteSpace(Configuration["Authentication:Google:ClientSecret"]))
             {
-                ClientId = Configuration["Authentication:Google:ClientId"],
-                ClientSecret = Configuration["Authentication:Google:ClientSecret"]
-            });
-
+                app.UseGoogleAuthentication(new GoogleOptions()
+                {
+                    ClientId = Configuration["Authentication:Google:ClientId"],
+                    ClientSecret = Configuration["Authentication:Google:ClientSecret"]
+                });
+            }
 
             app.UseMvc(routes =>
             {
@@ -115,6 +121,9 @@ namespace losol.EventR
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            await SeedData.EnsureRolesPopulated(app);
+            await SeedData.EnsureAdminUserPopulated(app);
         }
     }
 }

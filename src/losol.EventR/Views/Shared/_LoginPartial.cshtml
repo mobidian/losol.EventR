@@ -6,21 +6,27 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-        <form class="form-inline float-lg-right" asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage"><i class="fa fa-user" aria-hidden="true"></i> @UserManager.GetUserName(User)</a>
+    <form class="form-inline float-lg-right" asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">
+                    <i class="fa fa-user" aria-hidden="true"></i>  @UserManager.GetUserName(User)
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <span class="text-warning">(admin)</span>
+                    }
+                    </a>
                 </li>
                 <li class="nav-item">
                     <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
                 </li>
             </ul>
         </form>
-        }
-        else
-        {
-        <ul class="nav navbar-nav navbar-right">
-            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
-        </ul>
-        }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+    </ul>
+}
