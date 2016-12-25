@@ -47,4 +47,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0-msbuild2-final" />
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.1.0-preview4-final" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\bootstrap\dist\" />
+    <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />
+    <Folder Include="wwwroot\lib\jquery-validation\dist\" />
+    <Folder Include="wwwroot\lib\jquery\dist\" />
+  </ItemGroup>
 </Project>
