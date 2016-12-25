@@ -1,0 +1,15 @@
+﻿// Import bootstrap variables first
+@import "imports/bootstrap_variables";
+
+// Then import boostrap
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Font awesome
+$fa-font-path: "/lib/fonts";
+@import "../node_modules/font-awesome/scss/font-awesome";
+
+// Adding scss extra
+@import "imports/extra_scss";
+
+// And your hacks and extra css
+@import "imports/extra_css";
