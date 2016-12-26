@@ -25,7 +25,7 @@ var paths = {
     cssDest: "wwwroot/css/",
     minCss: "wwwroot/css/**/*.min.css",
     libSrc: "node_modules/",
-    libDest: "wwwroot/lib/",
+    libDest: "./wwwroot/lib/",
     bootstrapSassSrc: "node_modules/bootstrap/scss/",
     typescriptSrc: "appscripts/",
     typescriptDest: "wwwwoot/app/"
@@ -46,18 +46,30 @@ gulp.task("clean:lib", function (cb) {
 gulp.task("clean", ["clean:js", "clean:css", "clean:lib"]);
 
 // Copy libs to wwwroot/lib folder
-gulp.task("copy:lib", () => {
-    gulp.src([
-        'bootstrap/dist/',
-        'jquery/dist/',
-        'jquery-validation/dist',
-        'jquery-validation-unobtrusive',
-        'moment/min/*.js',
-        'moment/locale/nb.js'
-    ], {
-            cwd: paths.libSrc + "/**"
-        })
-        .pipe(gulp.dest(paths.libDest));
+gulp.task("copy:libs", ["clean:lib"], function () {
+    var libraries = {
+        "bootstrap": "bootstrap/dist/**/*.{js,map,css,ttf,svg,woff,eot}",
+        "jquery": "jquery/dist/**/*",
+        "jquery-validation": "jquery-validation/dist/**/*",
+        "jquery-validation-unobtrusive": "jquery-validation-unobtrusive/**/*",
+        "moment": "moment/min/*",
+        "moment-nb": "moment/locale/nb.js"
+    }
+
+    for (var destinationDir in libraries) {
+        gulp.src(paths.libSrc + libraries[destinationDir])
+            .pipe(gulp.dest(paths.libDest + destinationDir));
+    }
+});
+
+gulp.task('copy:fonts', function () {
+    gulp.src(paths.libSrc + 'font-awesome/fonts/**/*.{ttf,woff,woff2,eof,svg}')
+        .pipe(gulp.dest('./wwwroot/lib/fonts'));
+});
+
+gulp.task('copy:ckeditor', function () {
+    gulp.src('../ckeditor')
+        .pipe(gulp.dest('./wwwroot/lib/ckeditor'));
 });
 
 
