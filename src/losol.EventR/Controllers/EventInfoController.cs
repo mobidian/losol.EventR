@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using losol.EventR.Data;
 using losol.EventR.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace losol.EventR.Controllers
 {
-    [Authorize(Roles = "Administrator,Editor")]
     public class EventInfoController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,16 +19,13 @@ namespace losol.EventR.Controllers
             _context = context;    
         }
 
-
         // GET: EventInfo
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.EventInfo.ToListAsync());
         }
 
         // GET: EventInfo/Details/5
-        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -59,7 +54,7 @@ namespace losol.EventR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Publish,Location,StartTime,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +86,7 @@ namespace losol.EventR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Publish,Location,StartTime,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
             if (id != eventInfo.Id)
             {

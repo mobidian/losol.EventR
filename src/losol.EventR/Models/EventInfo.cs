@@ -35,7 +35,7 @@ namespace losol.EventR.Models
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
-        [Display(Name = "Til dato")]
+        [Display(Name = "Til klokka")]
         [DataType(DataType.Time)]
         public DateTime EndTime { get; set; }
 

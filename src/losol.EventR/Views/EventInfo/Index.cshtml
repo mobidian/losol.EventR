@@ -1,11 +1,17 @@
 @model IEnumerable<losol.EventR.Models.EventInfo>
 
 @{
-    ViewData["Title"] = "Index";
+    Layout = null;
 }
 
-<h2>Index</h2>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -25,7 +31,13 @@
                     @Html.DisplayNameFor(model => model.Location)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.EndTime)
@@ -73,7 +85,13 @@
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndTime)
@@ -111,3 +129,5 @@
 }
     </tbody>
 </table>
+</body>
+</html>

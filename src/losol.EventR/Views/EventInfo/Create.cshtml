@@ -1,10 +1,6 @@
 @model losol.EventR.Models.EventInfo
 
-@{
-    ViewData["Title"] = "Create";
-}
 
-<h2>Create</h2>
 
 <form asp-action="Create">
     <div class="form-horizontal">
@@ -41,10 +37,24 @@
             </div>
         </div>
         <div class="form-group">
+            <label asp-for="StartDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="StartTime" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="StartTime" class="form-control" />
                 <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
@@ -122,6 +132,5 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</body>
+</html>
