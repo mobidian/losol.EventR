@@ -1,10 +1,21 @@
-﻿@{
+﻿@model EventInfoListViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1 class="display-3">Events</h1>
-        <p class="lead">This is what is happening soon!</p>
+        <h1 class="display-3">Kurs og konferanser for helsefolk</h1>
+        <p class="lead">Se og bestill kurs hos Nordland legeforening!</p>
+    </div>
+</div>
+
+<div class="card-deck-wrapper">
+    <div class="card-deck">
+        @foreach (EventInfo e in Model.EventInfos.Take(3))
+        {
+        @Html.Partial("EventCard", e)
+        }
+
     </div>
 </div>

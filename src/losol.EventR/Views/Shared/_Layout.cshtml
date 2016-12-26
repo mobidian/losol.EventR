@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="nb">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,26 +18,58 @@
     <nav class="navbar navbar-dark bg-inverse hidden-print text-white no-link-decoration" id="header-navbar">
         <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"></button>
         <div class="collapse navbar-toggleable-md" id="navbarResponsive">
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">losol.EventR</a>
-            <ul class="nav navbar-nav">
-                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></liclass="nav-item">
-                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-            </ul>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">kursinord.no</a>
             <div class="nav-item float-lg-right">
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <main>
         @RenderBody()
-        <hr />
+    </main>
+    <footer class="footer mt-2 bg-inverse">
+        <div class="container-fluid footer-above">
+            <div class="row py-2">
+                <div class="col-md-6">
+                    <img class="pb-2" src="~/images/Nordland_legeforening-neg-300x84.png" alt="Logo Nordland legeforening" />
+                    <p>Nordland legeforening er en lokalforening av Den norske legeforening. </p>
+                </div>
 
-    </div>
-    <footer class="footer py-2 mt-2">
-        <div class="container-fluid">
-            <span class="text-muted">Write something funny.</span>
+                <div class="col-md-3">
+                    <h3>Kontakt oss</h3>
+                    <div>
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-fw fa-map-marker"></i>&nbsp;&nbsp; Mørkvedsenteret 17, 8028 Bodø</li>
+                            <li><i class="fa fa-fw fa-phone"></i>&nbsp;&nbsp; 75 54 49 11</li>
+                            <li><i class="fa fa-fw fa-envelope"></i>&nbsp;&nbsp;&#107;&#117;&#114;&#115;&#064;&#110;&#111;&#114;&#100;&#108;&#097;&#110;&#100;&#045;&#108;&#101;&#103;&#101;&#102;&#111;&#114;&#101;&#110;&#105;&#110;&#103;&#046;&#110;&#111;</li>
+
+                        </ul>
+                        </div>
+                 
+
+                </div>
+
+                    <div class="col-md-3">
+                        <h3>I sosiale medier</h3>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="https://www.facebook.com/nordlandslege" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/nordlandslege" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
         </div>
+    <div class="container-fluid footer-below">
+            <div class="row py-1">
+                <div class="col-lg-12">
+                    <p class="text-white"> Alle rettigheter reservert © kursinord.no - Best på kurs</p>
+                </div>
+            </div>
+    </div>
     </footer>
 
     <environment names="Development">

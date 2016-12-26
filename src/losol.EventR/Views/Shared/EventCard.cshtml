@@ -1,0 +1,9 @@
+@model EventInfo
+
+<div class="card no-link-decoration">
+    <div class="card-block">
+        <h4 class="card-title">@Model.Name</h4>
+        <p class="card-text">@Model.Description</p>
+        <a class="btn btn-success" asp-action="Details" asp-controller="EventInfo" asp-route-id="@Model.Id">Les mer</a>
+    </div>
+</div>
