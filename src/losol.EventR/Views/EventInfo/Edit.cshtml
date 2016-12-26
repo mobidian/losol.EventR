@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <label asp-for="Description" class="col-md-2 control-label"></label>
                         <div class="col-md-10">
-                            <input asp-for="Description" class="form-control" />
+                            <textarea asp-for="Description" class="form-control" ></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label asp-for="MoreInformation" class="col-md-2 control-label"></label>
                         <div class="col-md-10">
-                            <input asp-for="MoreInformation" class="form-control" />
+                            <textarea asp-for="MoreInformation" class="form-control"></textarea>
                             <span asp-validation-for="MoreInformation" class="text-danger"></span>
                         </div>
                     </div>
@@ -129,4 +129,6 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_RichEditor");}
+    <script>CKEDITOR.replace('MoreInformation');</script>
 }

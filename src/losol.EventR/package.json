@@ -9,7 +9,8 @@
     "tether": "~1.4.0",
     "jquery-validation": "~1.16.0",
     "jquery-validation-unobtrusive": "~3.2.6",
-    "moment": "~2.17.1"
+    "moment": "~2.17.1",
+    "ckeditor": "~4.6.1"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
