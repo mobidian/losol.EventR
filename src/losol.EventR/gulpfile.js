@@ -52,7 +52,6 @@ gulp.task("copy:libs", ["clean:lib"], function () {
         "jquery": "jquery/dist/**/*",
         "jquery-validation": "jquery-validation/dist/**/*",
         "jquery-validation-unobtrusive": "jquery-validation-unobtrusive/**/*",
-        "ckeditor": "ckeditor/**/*",
         "moment": "moment/min/*",
         "moment-nb": "moment/locale/nb.js"
     }
@@ -66,6 +65,11 @@ gulp.task("copy:libs", ["clean:lib"], function () {
 gulp.task('copy:fonts', function () {
     gulp.src(paths.libSrc + 'font-awesome/fonts/**/*.{ttf,woff,woff2,eof,svg}')
         .pipe(gulp.dest('./wwwroot/lib/fonts'));
+});
+
+gulp.task('copy:ckeditor', function () {
+    gulp.src('../ckeditor')
+        .pipe(gulp.dest('./wwwroot/lib/ckeditor'));
 });
 
 
