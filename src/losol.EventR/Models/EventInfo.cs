@@ -24,11 +24,11 @@ namespace losol.EventR.Models
         public string Location { get; set; }
 
         [Display(Name = "Fra dato")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime StartTime { get; set; }
 
         [Display(Name = "Til dato")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime EndTime { get; set; }
 
         [Display(Name = "Påmeldingsfrist")]
