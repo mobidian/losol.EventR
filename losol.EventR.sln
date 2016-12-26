@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2E35458F-199
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "losol.EventR", "src\losol.EventR\losol.EventR.csproj", "{431AC3BF-04AF-4D3D-8629-B7CACF343B96}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ckeditor", "ckeditor", "{FF2296A0-C8A3-4E93-945E-9E42A385CFFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{431AC3BF-04AF-4D3D-8629-B7CACF343B96} = {2E35458F-1990-4D01-ACB5-F016F60A039B}
+		{FF2296A0-C8A3-4E93-945E-9E42A385CFFD} = {2E35458F-1990-4D01-ACB5-F016F60A039B}
 	EndGlobalSection
 EndGlobal

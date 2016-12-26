@@ -130,5 +130,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     @{await Html.RenderPartialAsync("_RichEditor");}
-    <script>CKEDITOR.replace('MoreInformation');</script>
+    <script>
+        CKEDITOR.replace('MoreInformation', { language: 'nb' });
+        </script>
 }
