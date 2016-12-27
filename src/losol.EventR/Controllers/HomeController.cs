@@ -38,6 +38,20 @@ namespace losol.EventR.Controllers
             return View();
         }
 
+        public IActionResult Terms()
+        {
+            ViewData["Message"] = "Terms of use.";
+
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            ViewData["Message"] = "Privacy and Cookies";
+
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();

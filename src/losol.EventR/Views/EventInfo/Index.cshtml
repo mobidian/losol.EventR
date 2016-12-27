@@ -1,133 +1,21 @@
 @model IEnumerable<losol.EventR.Models.EventInfo>
 
 @{
-    Layout = null;
+    Layout = Layout;
 }
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Publish)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Location)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EndDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EndTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastEnrolmentDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastWithdrawalDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaxAttendees)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.VatPercent)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MoreInformation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.WelcomeLetter)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DiplomaDescription)
-                </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publish)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastEnrolmentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastWithdrawalDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxAttendees)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VatPercent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoreInformation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WelcomeLetter)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiplomaDescription)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-</body>
-</html>
+<div class="container">
+  @if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
+  {
+        <p>
+        <a class="btn btn-info" asp-action="Create">Legg til nytt kurs</a>
+    </p>}
+    @foreach (EventInfo e in Model)
+    {
+        @Html.Partial("EventCard", e)
+    }
+
+        
+</div>

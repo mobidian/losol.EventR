@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using losol.EventR.Data;
 using losol.EventR.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace losol.EventR.Controllers
 {
+    [Authorize]
     public class EventInfoController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,11 +22,13 @@ namespace losol.EventR.Controllers
         }
 
         // GET: EventInfo
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.EventInfo.ToListAsync());
         }
 
+        [AllowAnonymous]
         // GET: EventInfo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -34,7 +38,7 @@ namespace losol.EventR.Controllers
             }
 
             var eventInfo = await _context.EventInfo
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.EventInfoId == id);
             if (eventInfo == null)
             {
                 return NotFound();
@@ -73,7 +77,7 @@ namespace losol.EventR.Controllers
                 return NotFound();
             }
 
-            var eventInfo = await _context.EventInfo.SingleOrDefaultAsync(m => m.Id == id);
+            var eventInfo = await _context.EventInfo.SingleOrDefaultAsync(m => m.EventInfoId == id);
             if (eventInfo == null)
             {
                 return NotFound();
@@ -88,7 +92,7 @@ namespace losol.EventR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
-            if (id != eventInfo.Id)
+            if (id != eventInfo.EventInfoId)
             {
                 return NotFound();
             }
@@ -102,7 +106,7 @@ namespace losol.EventR.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventInfoExists(eventInfo.Id))
+                    if (!EventInfoExists(eventInfo.EventInfoId))
                     {
                         return NotFound();
                     }
@@ -125,7 +129,7 @@ namespace losol.EventR.Controllers
             }
 
             var eventInfo = await _context.EventInfo
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.EventInfoId == id);
             if (eventInfo == null)
             {
                 return NotFound();
@@ -139,7 +143,7 @@ namespace losol.EventR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eventInfo = await _context.EventInfo.SingleOrDefaultAsync(m => m.Id == id);
+            var eventInfo = await _context.EventInfo.SingleOrDefaultAsync(m => m.EventInfoId == id);
             _context.EventInfo.Remove(eventInfo);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -147,7 +151,7 @@ namespace losol.EventR.Controllers
 
         private bool EventInfoExists(int id)
         {
-            return _context.EventInfo.Any(e => e.Id == id);
+            return _context.EventInfo.Any(e => e.EventInfoId == id);
         }
     }
 }

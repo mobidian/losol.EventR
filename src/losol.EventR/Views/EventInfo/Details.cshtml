@@ -1,119 +1,88 @@
 @model losol.EventR.Models.EventInfo
 
-<!DOCTYPE html>
+@{
+    ViewData["Title"] = "Details";
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
+<div class="jumbotron jumbotron-fluid py-1 mt-0">
+    <div class="container">
+        <h1 class="display-3">@Model.Name </h1>
+        <p class="lead">@Model.Description</p>
+        <p class="lead">
+            <i class="fa fa-fw fa-calendar-o" aria-hidden="true"></i> @Model.StartDate.ToString("dddd") @Model.StartDate.ToString("M") @if ((Model.EndDate != null) && (Model.StartDate != Model.EndDate))
+            { <span>&#8211;&nbsp;@Model.EndDate.Value.ToString("D")</span>}
+        </p>
+@if (Model.Location != null)
+{
+        <p class="lead"><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> @Model.Location</p>
+}
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Starter</td>
+                            <td>
+                                @Model.StartDate.ToString("d")
+                                @if (Model.StartTime != null)
+                                {
+                                    <span>kl @Model.StartTime.Value.ToString("H:mm")</span>
+                                }
+                            </td>
+                        </tr>
+                        @if (Model.EndDate != null)
+                        {
+                            <tr>
+                                <td>Slutter</td>
+                                <td>
+                                    @Model.EndDate.Value.ToString("d")
+                                    @if (Model.EndTime != null)
+                                    {
+                                        <span>kl @Model.EndTime.Value.ToString("H:mm")</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.LastEnrolmentDate != null)
+                        {
+                            <tr>
+                                <td>P&aring;meldingsfrist</td>
+                                <td>@Model.LastEnrolmentDate.Value.ToString("d")</td>
+                            </tr>
+                        }
+                        @if (Model.LastWithdrawalDate != null)
+                        {
+                            <tr>
+                                <td>Avmeldingsfrist</td>
+                                <td>@Model.LastWithdrawalDate.Value.ToString("d")</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>Pris</td>
+                            <td>@Model.Price.ToString("C") </td>
+                        </tr>
+                        <tr>
+                            <td>Antall deltakere</td>
+                            <td>@Model.MaxAttendees</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<div>
-    <h4>EventInfo</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Publish)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Publish)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastEnrolmentDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastEnrolmentDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastWithdrawalDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastWithdrawalDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MaxAttendees)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MaxAttendees)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.VatPercent)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.VatPercent)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.MoreInformation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MoreInformation)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.WelcomeLetter)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.WelcomeLetter)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DiplomaDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DiplomaDescription)
-        </dd>
-    </dl>
+        <div class="col-md-8">
+            @Html.Raw(Model.MoreInformation)
+        </div>
+    </div>
+    <div class="no-link-decoration">
+        @if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
+            {
+            <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.EventInfoId">Rediger</a>
+        }
+        <a class="btn btn-success" asp-action="Index">Vis alle kurs</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-</body>
-</html>

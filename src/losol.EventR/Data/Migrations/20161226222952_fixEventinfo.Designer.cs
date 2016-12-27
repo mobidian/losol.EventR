@@ -8,9 +8,10 @@ using losol.EventR.Data;
 namespace losol.EventR.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161226222952_fixEventinfo")]
+    partial class fixEventinfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -72,10 +73,8 @@ namespace losol.EventR.Data.Migrations
 
             modelBuilder.Entity("losol.EventR.Models.EventInfo", b =>
                 {
-                    b.Property<int>("EventInfoId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("City");
 
                     b.Property<string>("Description");
 
@@ -109,7 +108,7 @@ namespace losol.EventR.Data.Migrations
 
                     b.Property<string>("WelcomeLetter");
 
-                    b.HasKey("EventInfoId");
+                    b.HasKey("Id");
 
                     b.ToTable("EventInfo");
                 });
