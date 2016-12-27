@@ -39,7 +39,7 @@ namespace losol.EventR.Controllers
 
             var eventInfo = await _context.EventInfo
                 .SingleOrDefaultAsync(m => m.EventInfoId == id);
-            if (eventInfo == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -58,7 +58,7 @@ namespace losol.EventR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
+        public async Task<IActionResult> Create([Bind("EventId,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace losol.EventR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
+        public async Task<IActionResult> Edit(int id, [Bind("EventInfoId,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
             if (id != eventInfo.EventInfoId)
             {
@@ -149,9 +149,9 @@ namespace losol.EventR.Controllers
             return RedirectToAction("Index");
         }
 
-        private bool EventInfoExists(int id)
+        private bool EventInfoExists(int eventInfoId)
         {
-            return _context.EventInfo.Any(e => e.EventInfoId == id);
+            return _context.EventInfo.Any(e => e.EventInfoId == eventInfoId);
         }
     }
 }

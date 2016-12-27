@@ -15,7 +15,7 @@
     <div class="display-4">Neste kurs</div>
     <div class="card-deck-wrapper">
         <div class="card-deck">
-            @foreach (EventInfo e in Model.EventInfos.OrderByDescending(s => s.StartDate).Take(4))
+            @foreach (EventInfo e in Model.EventInfos.OrderByDescending(s => s.StartDate).Take(2))
             {
                 @Html.Partial("EventCard", e)
             }
@@ -24,7 +24,7 @@
     </div>
     <div class="card-deck-wrapper">
         <div class="card-deck">
-            @foreach (EventInfo e in Model.EventInfos.OrderByDescending(s => s.StartDate).Skip(4).Take(4))
+            @foreach (EventInfo e in Model.EventInfos.OrderByDescending(s => s.StartDate).Skip(2).Take(4))
             {
                 @Html.Partial("EventCard", e)
             }
