@@ -8,9 +8,10 @@ using losol.EventR.Data;
 namespace losol.EventR.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161227195146_added_userphoto")]
+    partial class added_userphoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -23,27 +24,15 @@ namespace losol.EventR.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Address");
-
-                    b.Property<string>("Address2");
-
-                    b.Property<string>("Bio");
-
                     b.Property<DateTime>("BirthDate");
-
-                    b.Property<string>("City");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<string>("Country");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("Employer");
 
                     b.Property<string>("FullName");
 
@@ -57,19 +46,13 @@ namespace losol.EventR.Data.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Occupation");
-
                     b.Property<string>("PasswordHash");
 
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("PostalCode");
-
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("State");
 
                     b.Property<bool>("TwoFactorEnabled");
 

@@ -10,6 +10,7 @@ namespace losol.EventR.Models
     {
         public int ProductId { get; set; }
 
+
         [Required(ErrorMessage = "Produktet må ha et navn")]
         public string Name { get; set; }
 
@@ -17,7 +18,7 @@ namespace losol.EventR.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        public int MaxAttendees { get; set; } = 0;
+        public int MaxParticipants { get; set; } = 0;
         public decimal Price { get; set; } = 0;
         public int VatPercent { get; set; } = 25;
 

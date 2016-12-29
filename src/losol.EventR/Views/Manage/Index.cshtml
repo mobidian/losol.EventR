@@ -8,27 +8,40 @@
     <p class="text-success">@ViewData["StatusMessage"]</p>
 
     <hr />
-    <dl class="dl-horizontal">
-        <dt>Passord:</dt>
-        <dd>
-            @if (Model.HasPassword)
-            {
-                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
-            }
-            else
-            {
-                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
-            }
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
 
-            @Model.Logins.Count <a asp-controller="Manage" asp-action="ManageLogins" class="btn-bracketed">Manage</a>
-        </dd>
-        <dt>Phone Number:</dt>
-        <dd>
-           
-            @(Model.PhoneNumber ?? "None")
+
+    <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+        <div class="form-group row">
+            <label asp-for="UserPhoto" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input type="file" asp-for="UserPhoto" name="UserPhoto" accept=".png,.jpg,.jpeg,.gif,.tif" />
+                <span asp-validation-for="UserPhoto" class="text-danger"></span>
+            </div>
+        </div>
+
+  
+    </form>
+        <dl class="dl-horizontal">
+            <dt>Passord:</dt>
+            <dd>
+                @if (Model.HasPassword)
+            {
+                    <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
+                }
+                else
+                {
+                    <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
+                }
+            </dd>
+            <dt>External Logins:</dt>
+            <dd>
+
+                @Model.Logins.Count <a asp-controller="Manage" asp-action="ManageLogins" class="btn-bracketed">Manage</a>
+            </dd>
+            <dt>Phone Number:</dt>
+            <dd>
+
+                @(Model.PhoneNumber ?? "None")
                 @if (Model.PhoneNumber != null)
                 {
                     <br />
@@ -41,8 +54,8 @@
                 {
                     <a asp-controller="Manage" asp-action="AddPhoneNumber" class="btn-bracketed">Add</a>
                 }
-        </dd>
+            </dd>
 
-       
-    </dl>
+
+        </dl>
 </div>

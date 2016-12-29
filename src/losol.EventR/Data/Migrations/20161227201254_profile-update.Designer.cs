@@ -8,9 +8,10 @@ using losol.EventR.Data;
 namespace losol.EventR.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161227201254_profile-update")]
+    partial class profileupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -35,8 +36,6 @@ namespace losol.EventR.Data.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<string>("Country");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -68,8 +67,6 @@ namespace losol.EventR.Data.Migrations
                     b.Property<string>("PostalCode");
 
                     b.Property<string>("SecurityStamp");
-
-                    b.Property<string>("State");
 
                     b.Property<bool>("TwoFactorEnabled");
 
