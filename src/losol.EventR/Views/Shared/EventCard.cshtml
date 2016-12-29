@@ -4,6 +4,15 @@
     <div class="card-block">
         <h4 class="card-title">@Model.Name</h4>
         <p class="card-text">@Model.Description</p>
-        <a class="btn btn-success" asp-action="Details" asp-controller="EventInfo" asp-route-id="@Model.Id">Les mer</a>
+        <p class="card-text"><small class="text-muted"> 
+    <i class="fa fa-fw fa-calendar-o" aria-hidden="true"></i> @Model.StartDate.ToString("dddd") @Model.StartDate.ToString("M") @if ((Model.EndDate != null) && (Model.StartDate != Model.EndDate))
+            { <span>&#8211;&nbsp;@Model.EndDate.Value.ToString("D")</span>} </small>
+            @if (Model.Location != null)
+            {
+                <br><small class="text-muted"><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i>@Model.Location </small>
+            }
+</p>
+       
+        <a class="btn btn-success" asp-action="Details" asp-controller="EventInfo" asp-route-id="@Model.EventInfoId">Les mer</a>
     </div>
 </div>

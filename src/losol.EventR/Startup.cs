@@ -13,6 +13,8 @@ using losol.EventR.Data;
 using losol.EventR.Models;
 using losol.EventR.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace losol.EventR
 {
@@ -48,13 +50,16 @@ namespace losol.EventR
                     {
                         config.SignIn.RequireConfirmedEmail = true;
                         config.Password.RequireNonAlphanumeric = false;
-                        config.Password.RequiredLength = 6;
+                        config.Password.RequiredLength = 7;
                         config.Password.RequireDigit = true;
                     })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            // Add resource folder for localization
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+       
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -66,6 +71,30 @@ namespace losol.EventR
                 options.Filters.Add(new RequireHttpsAttribute());
             });
 
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                 //   new CultureInfo("en-US"),
+                    new CultureInfo("nb-NO")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: "nb-NO", uiCulture: "nb-NO");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                // Custom provider, just returning norwegian, anyway... 
+                options.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(async context =>
+                {
+                    // My custom request culture logic
+                    return new ProviderCultureResult("nb-NO");
+                }));
+            });
+
+            services.AddMvc()
+           .AddViewLocalization()   // .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)  ?  
+           .AddDataAnnotationsLocalization(); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,8 +118,23 @@ namespace losol.EventR
 
             app.UseIdentity();
 
+            var supportedCultures = new[]
+            {
+                //new CultureInfo("en-US"),
+                new CultureInfo("nb-NO")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("nb-NO"),
+                // Formatting numbers, dates, etc.
+                SupportedCultures = supportedCultures,
+                // UI strings that we have localized.
+                SupportedUICultures = supportedCultures
+            });
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            // Facebook authentication
             if (!string.IsNullOrWhiteSpace(Configuration["Authentication:Facebook:AppId"]) && !string.IsNullOrWhiteSpace(Configuration["Authentication:Facebook:AppSecret"]))
             {
                 app.UseFacebookAuthentication(new FacebookOptions()
@@ -106,6 +150,7 @@ namespace losol.EventR
 
                 });
             }
+            // Google authentication
             if (!string.IsNullOrWhiteSpace(Configuration["Authentication:Google:ClientId"]) && !string.IsNullOrWhiteSpace(Configuration["Authentication:Google:ClientSecret"]))
             {
                 app.UseGoogleAuthentication(new GoogleOptions()

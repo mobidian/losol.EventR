@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace losol.EventR.Controllers
 {
-    [Authorize(Roles = "Administrator,Editor")]
+    [Authorize]
     public class EventInfoController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,7 +21,6 @@ namespace losol.EventR.Controllers
             _context = context;    
         }
 
-
         // GET: EventInfo
         [AllowAnonymous]
         public async Task<IActionResult> Index()
@@ -29,8 +28,8 @@ namespace losol.EventR.Controllers
             return View(await _context.EventInfo.ToListAsync());
         }
 
-        // GET: EventInfo/Details/5
         [AllowAnonymous]
+        // GET: EventInfo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,8 +38,8 @@ namespace losol.EventR.Controllers
             }
 
             var eventInfo = await _context.EventInfo
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (eventInfo == null)
+                .SingleOrDefaultAsync(m => m.EventInfoId == id);
+            if (id == null)
             {
                 return NotFound();
             }
@@ -59,7 +58,7 @@ namespace losol.EventR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Publish,Location,StartTime,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
+        public async Task<IActionResult> Create([Bind("EventId,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +77,7 @@ namespace losol.EventR.Controllers
                 return NotFound();
             }
 
-            var eventInfo = await _context.EventInfo.SingleOrDefaultAsync(m => m.Id == id);
+            var eventInfo = await _context.EventInfo.SingleOrDefaultAsync(m => m.EventInfoId == id);
             if (eventInfo == null)
             {
                 return NotFound();
@@ -91,9 +90,9 @@ namespace losol.EventR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Publish,Location,StartTime,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
+        public async Task<IActionResult> Edit(int id, [Bind("EventInfoId,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
-            if (id != eventInfo.Id)
+            if (id != eventInfo.EventInfoId)
             {
                 return NotFound();
             }
@@ -107,7 +106,7 @@ namespace losol.EventR.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventInfoExists(eventInfo.Id))
+                    if (!EventInfoExists(eventInfo.EventInfoId))
                     {
                         return NotFound();
                     }
@@ -130,7 +129,7 @@ namespace losol.EventR.Controllers
             }
 
             var eventInfo = await _context.EventInfo
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.EventInfoId == id);
             if (eventInfo == null)
             {
                 return NotFound();
@@ -144,15 +143,15 @@ namespace losol.EventR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eventInfo = await _context.EventInfo.SingleOrDefaultAsync(m => m.Id == id);
+            var eventInfo = await _context.EventInfo.SingleOrDefaultAsync(m => m.EventInfoId == id);
             _context.EventInfo.Remove(eventInfo);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool EventInfoExists(int id)
+        private bool EventInfoExists(int eventInfoId)
         {
-            return _context.EventInfo.Any(e => e.Id == id);
+            return _context.EventInfo.Any(e => e.EventInfoId == eventInfoId);
         }
     }
 }

@@ -8,8 +8,11 @@ namespace losol.EventR.Models.ManageViewModels
 {
     public class IndexViewModel
     {
-        public bool HasPassword { get; set; }
 
+        public ApplicationUser User { get; set; }
+
+        public bool HasPassword { get; set; }
+        
         public IList<UserLoginInfo> Logins { get; set; }
 
         public string PhoneNumber { get; set; }

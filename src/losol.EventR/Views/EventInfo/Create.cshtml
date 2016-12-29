@@ -1,12 +1,9 @@
 @model losol.EventR.Models.EventInfo
 
-@{
-    ViewData["Title"] = "Create";
-}
 
-<h2>Create</h2>
 
 <form asp-action="Create">
+    <input type="hidden" asp-for="VatPercent" class="form-control" value="0" />
     <div class="form-horizontal">
         <h4>EventInfo</h4>
         <hr />
@@ -41,10 +38,24 @@
             </div>
         </div>
         <div class="form-group">
+            <label asp-for="StartDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="StartTime" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="StartTime" class="form-control" />
                 <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
@@ -71,22 +82,15 @@
         <div class="form-group">
             <label asp-for="MaxAttendees" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="MaxAttendees" class="form-control" />
+                <input asp-for="MaxAttendees" class="form-control" value="0"/>
                 <span asp-validation-for="MaxAttendees" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
             <label asp-for="Price" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" class="form-control" value="0" />
                 <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="VatPercent" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="VatPercent" class="form-control" />
-                <span asp-validation-for="VatPercent" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
@@ -122,6 +126,5 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</body>
+</html>

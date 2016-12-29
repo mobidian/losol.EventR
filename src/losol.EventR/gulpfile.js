@@ -68,8 +68,8 @@ gulp.task('copy:fonts', function () {
 });
 
 gulp.task('copy:ckeditor', function () {
-    gulp.src('../ckeditor')
-        .pipe(gulp.dest('./wwwroot/lib/ckeditor'));
+    gulp.src('../ckeditor/**/*')
+        .pipe(gulp.dest('./wwwroot/lib/ckeditor/'));
 });
 
 

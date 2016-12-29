@@ -23,15 +23,27 @@ namespace losol.EventR.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Address2");
+
+                    b.Property<string>("Bio");
+
                     b.Property<DateTime>("BirthDate");
+
+                    b.Property<string>("City");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("Country");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("Employer");
 
                     b.Property<string>("FullName");
 
@@ -45,18 +57,26 @@ namespace losol.EventR.Data.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
+                    b.Property<string>("Occupation");
+
                     b.Property<string>("PasswordHash");
 
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<string>("PostalCode");
+
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("State");
 
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<byte[]>("UserPhoto");
 
                     b.HasKey("Id");
 
@@ -72,14 +92,18 @@ namespace losol.EventR.Data.Migrations
 
             modelBuilder.Entity("losol.EventR.Models.EventInfo", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EventInfoId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City");
 
                     b.Property<string>("Description");
 
                     b.Property<string>("DiplomaDescription");
 
-                    b.Property<DateTime>("EndTime");
+                    b.Property<DateTime?>("EndDate");
+
+                    b.Property<DateTime?>("EndTime");
 
                     b.Property<DateTime?>("LastEnrolmentDate");
 
@@ -97,13 +121,15 @@ namespace losol.EventR.Data.Migrations
 
                     b.Property<bool>("Publish");
 
-                    b.Property<DateTime>("StartTime");
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<DateTime?>("StartTime");
 
                     b.Property<decimal>("VatPercent");
 
                     b.Property<string>("WelcomeLetter");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventInfoId");
 
                     b.ToTable("EventInfo");
                 });
