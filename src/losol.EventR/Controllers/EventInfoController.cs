@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace losol.EventR.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator,Editor")]
     public class EventInfoController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,8 +21,8 @@ namespace losol.EventR.Controllers
             _context = context;    
         }
 
-        // GET: EventInfo
         [AllowAnonymous]
+        // GET: EventInfo
         public async Task<IActionResult> Index()
         {
             return View(await _context.EventInfo.ToListAsync());
@@ -39,7 +39,7 @@ namespace losol.EventR.Controllers
 
             var eventInfo = await _context.EventInfo
                 .SingleOrDefaultAsync(m => m.EventInfoId == id);
-            if (id == null)
+            if (eventInfo == null)
             {
                 return NotFound();
             }
@@ -58,7 +58,7 @@ namespace losol.EventR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventId,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
+        public async Task<IActionResult> Create([Bind("EventInfoId,Name,Description,Publish,Location,City,StartDate,StartTime,EndDate,EndTime,LastRegistrationDate,LastCancellationDate,MaxParticipants,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace losol.EventR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventInfoId,Name,Description,Publish,Location,StartDate,StartTime,EndDate,EndTime,LastEnrolmentDate,LastWithdrawalDate,MaxAttendees,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
+        public async Task<IActionResult> Edit(int id, [Bind("EventInfoId,Name,Description,Publish,Location,City,StartDate,StartTime,EndDate,EndTime,LastRegistrationDate,LastCancellationDate,MaxParticipants,Price,VatPercent,MoreInformation,WelcomeLetter,DiplomaDescription")] EventInfo eventInfo)
         {
             if (id != eventInfo.EventInfoId)
             {
@@ -149,9 +149,9 @@ namespace losol.EventR.Controllers
             return RedirectToAction("Index");
         }
 
-        private bool EventInfoExists(int eventInfoId)
+        private bool EventInfoExists(int id)
         {
-            return _context.EventInfo.Any(e => e.EventInfoId == eventInfoId);
+            return _context.EventInfo.Any(e => e.EventInfoId == id);
         }
     }
 }
