@@ -6,13 +6,13 @@
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1 class="display-3">Kurs og konferanser for helsefolk</h1>
+        <h1 class="display-1">Kurs og konferanser for helsefolk</h1>
         <p class="lead">Se og bestill kurs hos Nordland legeforening!</p>
     </div>
 </div>
 
 <div class="container">
-    <div class="display-4">Neste kurs</div>
+    <div class="display-2">Neste kurs</div>
     <div class="card-deck-wrapper">
         <div class="card-deck">
             @foreach (EventInfo e in Model.EventInfos.OrderByDescending(s => s.StartDate).Take(2))
@@ -29,6 +29,14 @@
                 @Html.Partial("EventCard", e)
             }
 
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+       
+        <div class="display-2 pt-3">Alle kurs</div>
+        <div>
+            @Html.Partial("EventsListedByMonth", Model)
         </div>
     </div>
 </div>
