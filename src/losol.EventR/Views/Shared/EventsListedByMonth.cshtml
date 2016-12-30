@@ -1,0 +1,36 @@
+﻿@model EventInfoListViewModel
+
+<div class="card-columns">
+    @{
+        var grouped = (from p in Model.EventInfos.OrderBy(q => q.StartDate)
+                       let MonthName = p.StartDate.ToString("MMMM")
+                       group p by new { MonthName, p.StartDate.Year } into r
+                       select new
+                       {
+                           Month = r.Key.MonthName,
+                           Year = r.Key.Year,
+                           Events = (from q in Model.EventInfos where q.StartDate.ToString("MMMM") == r.Key.MonthName && q.StartDate.Year == r.Key.Year select q)
+                       });
+
+        foreach (var item in grouped)
+        {
+            string eventMonth = item.Month + " " + item.Year; // event month and year
+
+            <div class="card">
+                <div class="card-block no-link-decoration">
+                    <p class="card-title lead">@eventMonth</p>
+
+                        @foreach (var eventInfo in item.Events)
+                        {
+                            <a asp-action="Details" asp-controller="EventInfo" asp-route-id="@eventInfo.EventInfoId" class="">
+                                <p class=""><strong>@eventInfo.Name</strong></p>
+                                <p class="">@eventInfo.Description</p>
+                            </a>
+                        }
+                    </div>
+            </div>
+        }
+
+
+    }
+</div>
