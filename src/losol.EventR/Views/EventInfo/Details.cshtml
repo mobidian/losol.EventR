@@ -48,18 +48,18 @@
                                 </td>
                             </tr>
                         }
-                        @if (Model.LastEnrolmentDate != null)
+                        @if (Model.LastRegistrationDate != null)
                         {
                             <tr>
                                 <td>P&aring;meldingsfrist</td>
-                                <td>@Model.LastEnrolmentDate.Value.ToString("d")</td>
+                                <td>@Model.LastRegistrationDate.Value.ToString("d")</td>
                             </tr>
                         }
-                        @if (Model.LastWithdrawalDate != null)
+                        @if (Model.LastCancellationDate != null)
                         {
                             <tr>
                                 <td>Avmeldingsfrist</td>
-                                <td>@Model.LastWithdrawalDate.Value.ToString("d")</td>
+                                <td>@Model.LastCancellationDate.Value.ToString("d")</td>
                             </tr>
                         }
                         <tr>
@@ -68,7 +68,7 @@
                         </tr>
                         <tr>
                             <td>Antall deltakere</td>
-                            <td>@Model.MaxAttendees</td>
+                            <td>@Model.MaxParticipants</td>
                         </tr>
                     </tbody>
                 </table>

@@ -48,14 +48,14 @@ namespace losol.EventR.Models
 
         [Display(Name = "Påmeldingsfrist", Description ="Frist for påmelding til arrangementet", GroupName ="Frister")]
         [DataType(DataType.Date)]
-        public DateTime? LastEnrolmentDate { get; set; } //påmeldingsfrist
+        public DateTime? LastRegistrationDate { get; set; } 
 
         [Display(Name = "Avmeldingsfrist", Description = "Frist for å melde seg av arrangementet", GroupName = "Frister")]
         [DataType(DataType.Date)]
-        public DateTime? LastWithdrawalDate { get; set; } //avmeldingsfrist
+        public DateTime? LastCancellationDate { get; set; } 
 
         [Display(Name = "Antall deltakere", Description = "Maksimalt antall deltakere")]
-        public int MaxAttendees { get; set; } = 0; //maks antall deltakere
+        public int MaxParticipants { get; set; } = 0; //maks antall deltakere
 
         [Display(Name = "Pris")]
         [DisplayFormat(DataFormatString = "{0:0}", ApplyFormatInEditMode = true)]
